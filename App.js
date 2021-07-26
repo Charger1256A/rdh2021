@@ -161,7 +161,7 @@ export default function App() {
     var localDangerZoneCrossing = dangerZoneCrossing;
     var localItems = items
     if(localDangerZoneCrossing.includes(barrier)) {
-      localDangerZoneCrossing = [];
+      localDangerZoneCrossing.shift(); //Removes first item
       // alert(localDangerZoneCrossing);
     }
     localDangerZoneCrossing.push(barrier);
