@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {TouchableOpacity, StyleSheet, Text, View, Switch} from 'react-native';
 
 // stuff to do:
@@ -29,6 +29,17 @@ export default function App() {
   const [decontaminationButton, setDecontaminationtButton] = useState(false);
   const [labDoorButton, setLabDoorButton] = useState(false);
   const [chemicalSpillButton, setChemicalSpillButton] = useState(false);
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
+  //     console.log(dangerZoneCrossing);
+  //     // updateButtonColor();
+  //     // alert("updated button color")
+  //   }, 5000)
+  
+  //   return () => clearInterval(intervalId); //This is important
+   
+  // }, [])
 
   function updateEvents(event) {
     var localEvents = events;
@@ -123,9 +134,9 @@ export default function App() {
 
   function undo() {
     var localEvents = events;
-    console.log(localEvents);
+    // console.log(localEvents);
     localEvents.pop();
-    console.log(localEvents);
+    // console.log(localEvents);
     setEvents(localEvents);
     updatePoints();
     updateItems();
@@ -169,7 +180,7 @@ export default function App() {
     }
   }
 
-  function updateDangerZoneCrossing(barrier) {
+  const updateDangerZoneCrossing = (barrier) => {
     var localDangerZoneCrossing = dangerZoneCrossing;
     var localItems = items
     if(localDangerZoneCrossing.includes(barrier)) {
@@ -177,24 +188,34 @@ export default function App() {
       // alert(localDangerZoneCrossing);
     }
     localDangerZoneCrossing.push(barrier);
+    localDangerZoneCrossing = [...new Set(localDangerZoneCrossing)];
     // alert(localDangerZoneCrossing);
     if(localDangerZoneCrossing.length === 3 && !hasDuplicates(localDangerZoneCrossing)) {
+      // console.log("done");
       localItems.dangerZoneCrossing++;
       updatePoints();
-      localDangerZoneCrossing = []
+      localDangerZoneCrossing = [];
     }
 
 
     setItems(localItems);
-    setDangerZoneCrossing(localDangerZoneCrossing)
-    console.log(dangerZoneCrossing);
-    updateButtonColor();
+    // console.log(`201: ${localDangerZoneCrossing}`);
+    setDangerZoneCrossing(localDangerZoneCrossing);
+    // console.log(`203: ${dangerZoneCrossing}`);
+    // console.log(dangerZoneCrossing);
+    updateButtonColor(localDangerZoneCrossing);
   }
 
-  function updateButtonColor() {
-    setDecontaminationtButton(dangerZoneCrossing.includes("D"));
-    setLabDoorButton(dangerZoneCrossing.includes("LD"));
-    setChemicalSpillButton(dangerZoneCrossing.includes("CS"));
+  function updateButtonColor(buttonData) {
+    // console.log(`209: ${dangerZoneCrossing}`);
+    if (!buttonData) {
+      buttonData = [];
+    }
+    // console.log(`213: ${buttonData}`);
+
+    setDecontaminationtButton(buttonData.includes("D"));
+    setLabDoorButton(buttonData.includes("LD"));
+    setChemicalSpillButton(buttonData.includes("CS"));
   }
 
   function removeDangerZoneCrossing() {
