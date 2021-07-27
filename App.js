@@ -18,6 +18,9 @@ export default function App() {
     totalPenalties: 0,
   });
   const [dangerZoneCrossing, setDangerZoneCrossing] = useState([]);
+  const [decontaminationButton, setDecontaminationtButton] = useState(false);
+  const [labDoorButton, setLabDoorButton] = useState(false);
+  const [chemicalSpillButton, setChemicalSpillButton] = useState(false);
 
   function updateEvents(event) {
     var localEvents = events;
@@ -139,6 +142,7 @@ export default function App() {
       totalPenalties: 0,
     })
     setDangerZoneCrossing([])
+    updateButtonColor();
   }
 
   function toggleElementSet() {
@@ -165,7 +169,7 @@ export default function App() {
       // alert(localDangerZoneCrossing);
     }
     localDangerZoneCrossing.push(barrier);
-    alert(localDangerZoneCrossing);
+    // alert(localDangerZoneCrossing);
     if(localDangerZoneCrossing.length === 3 && !hasDuplicates(localDangerZoneCrossing)) {
       localItems.dangerZoneCrossing++;
       updatePoints();
@@ -175,6 +179,14 @@ export default function App() {
 
     setItems(localItems);
     setDangerZoneCrossing(localDangerZoneCrossing)
+    console.log(dangerZoneCrossing);
+    updateButtonColor();
+  }
+
+  function updateButtonColor() {
+    setDecontaminationtButton(dangerZoneCrossing.includes("D"));
+    setLabDoorButton(dangerZoneCrossing.includes("LD"));
+    setChemicalSpillButton(dangerZoneCrossing.includes("CS"));
   }
 
   function removeDangerZoneCrossing() {
@@ -186,6 +198,7 @@ export default function App() {
     setItems(localItems);
     updatePoints();
     updateItems();
+    updateButtonColor();
   }
 
   function hasDuplicates(array) {
@@ -199,19 +212,19 @@ export default function App() {
             <Text style={styles.sectionTitle}>Teleop</Text>
           </View>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.yellow]}
             onPress={() => updateEvents('YG')}>
             <Text>Yellow Goal</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.red]}
             onPress={() => updateEvents('RG')}>
             <Text>Red Goal</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.black]}
             onPress={() => updateEvents('BG')}>
-            <Text>Black Goal</Text>
+            <Text style={[styles.whiteText]}>Black Goal</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -219,24 +232,24 @@ export default function App() {
             <Text>Vials</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.yellow]}
             onPress={() => updateEvents('YE')}>
             <Text>Yellow Element</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.red]}
             onPress={() => updateEvents('RE')}>
             <Text>Red Element</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.black]}
             onPress={() => updateEvents('BE')}>
-            <Text>Black Element</Text>
+            <Text style={[styles.whiteText]}>Black Element</Text>
           </TouchableOpacity>
           <View style={styles.obstacleButtons}>
-            <TouchableOpacity style={styles.obstacleButton} onPress={() => updateDangerZoneCrossing("D")}><Text>Decontamination</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.obstacleButton} onPress={() => updateDangerZoneCrossing("LD")}><Text>Lab Door</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.obstacleButton} onPress={() => updateDangerZoneCrossing("CS")}><Text>Chemical Spill</Text></TouchableOpacity>
+              <TouchableOpacity style={decontaminationButton ? [styles.obstacleButton, {backgroundColor: "#aec6cf"}] : styles.obstacleButton} onPress={() => updateDangerZoneCrossing("D")}><Text>Decontamination</Text></TouchableOpacity>
+              <TouchableOpacity style={labDoorButton ? [styles.obstacleButton, {backgroundColor: "#aec6cf"}] : styles.obstacleButton} onPress={() => updateDangerZoneCrossing("LD")}><Text>Lab Door</Text></TouchableOpacity>
+              <TouchableOpacity style={chemicalSpillButton ? [styles.obstacleButton, {backgroundColor: "#aec6cf"}] : styles.obstacleButton} onPress={() => updateDangerZoneCrossing("CS")}><Text>Chemical Spill</Text></TouchableOpacity>
           </View>
           <View style={styles.sections}>
             <Text style={styles.sectionTitle}>Management</Text>
@@ -283,12 +296,12 @@ export default function App() {
             <Text>Technical Foul</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.yellow]}
             onPress={() => updateEvents('YC')}>
             <Text>Yellow Card</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.red]}
             onPress={() => updateEvents('RC')}>
             <Text>Red Card</Text>
           </TouchableOpacity>
@@ -332,12 +345,25 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
+  yellow :{
+    backgroundColor: '#FDFD96',
+  },
+  red: {
+    backgroundColor: '#FF6961',
+  },
+  black: {
+    backgroundColor: '#1D1C1A',
+  },
+  whiteText: {
+    color: "#ffffff",
+  },
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
     marginBottom: 10,
     marginRight: 20,
+    borderRadius: 10,
   },
   obstacleButton: {
     alignItems: 'center',
@@ -345,6 +371,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     marginRight: 20,
+    borderRadius: 10,
     flex: 0.3
   },
   buttonGroup: {
