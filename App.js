@@ -4,7 +4,7 @@ import {TouchableOpacity, StyleSheet, Text, View, Switch} from 'react-native';
 // stuff to do:
 //  1. danger zone crossing button removes item from array not the stat
 //  2. swap black and red goal and elements - Done!
-//  3. reset color back to grey when all three are selected
+//  3. reset color back to grey when all three are selected - Done!
 //  element set works without toggle
 //  + or - on the side of the buttons
 //  live updates
@@ -183,6 +183,8 @@ export default function App() {
   const updateDangerZoneCrossing = (barrier) => {
     var localDangerZoneCrossing = dangerZoneCrossing;
     var localItems = items
+    console.log(localDangerZoneCrossing);
+    console.log(`187: ${typeof(localDangerZoneCrossing)}`);
     if(localDangerZoneCrossing.includes(barrier)) {
       localDangerZoneCrossing.shift(); //Removes first item
       // alert(localDangerZoneCrossing);
@@ -229,6 +231,18 @@ export default function App() {
     updateItems();
     updateButtonColor();
   }
+
+  // function removeDangerZoneCrossing() {
+  //   // var localItems = items;
+  //   // if (localItems.dangerZoneCrossing > 0) {
+  //   //   localItems.dangerZoneCrossing--;
+  //   // }
+  //   setDangerZoneCrossing(dangerZoneCrossing.pop()); 
+  //   // updatePoints();
+  //   // updateItems();
+  //   updateButtonColor(dangerZoneCrossing.pop());
+    
+  // }
 
   function hasDuplicates(array) {
     return (new Set(array)).size !== array.length;
