@@ -3,7 +3,7 @@ import {TouchableOpacity, StyleSheet, Text, View, Switch} from 'react-native';
 
 // stuff to do:
 //  1. danger zone crossing button removes item from array not the stat
-//  2. swap black and red goal and elements
+//  2. swap black and red goal and elements - Done!
 //  3. reset color back to grey when all three are selected
 //  element set works without toggle
 //  + or - on the side of the buttons
@@ -225,14 +225,14 @@ export default function App() {
             <Text>Yellow Goal</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, styles.red]}
-            onPress={() => updateEvents('RG')}>
-            <Text>Red Goal</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             style={[styles.button, styles.black]}
             onPress={() => updateEvents('BG')}>
             <Text style={[styles.whiteText]}>Black Goal</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.red]}
+            onPress={() => updateEvents('RG')}>
+            <Text>Red Goal</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -245,14 +245,14 @@ export default function App() {
             <Text>Yellow Element</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, styles.red]}
-            onPress={() => updateEvents('RE')}>
-            <Text>Red Element</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             style={[styles.button, styles.black]}
             onPress={() => updateEvents('BE')}>
             <Text style={[styles.whiteText]}>Black Element</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, styles.red]}
+            onPress={() => updateEvents('RE')}>
+            <Text>Red Element</Text>
           </TouchableOpacity>
           <View style={styles.obstacleButtons}>
               <TouchableOpacity style={decontaminationButton ? [styles.obstacleButton, {backgroundColor: "#aec6cf"}] : styles.obstacleButton} onPress={() => updateDangerZoneCrossing("D")}><Text>Decontamination</Text></TouchableOpacity>
@@ -318,12 +318,12 @@ export default function App() {
           </View>
           <View style={styles.stats}>
             <Text>Yellow Goal: {items.yellowGoal}</Text>
-            <Text>Red Goal: {items.redGoal}</Text>
             <Text>Black Goal: {items.blackGoal}</Text>
+            <Text>Red Goal: {items.redGoal}</Text>
             <Text>Vials: {items.vials}</Text>
             <Text>Yellow Element: {items.yellowElement}</Text>
-            <Text>Red Element: {items.redElement}</Text>
             <Text>Black Element: {items.blackElement}</Text>
+            <Text>Red Element: {items.redElement}</Text>
             <Text>Element Set: {items.elementSet ? "complete":"incomplete"}</Text>
             <Text>Danger Zone Crossing: {items.dangerZoneCrossing}</Text>
             <Text>Total Penalties: {items.totalPenalties}</Text>
