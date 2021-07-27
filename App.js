@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, StyleSheet, Text, View, Switch} from 'react-native';
 
+// stuff to do:
+//  1. danger zone crossing button removes item from array not the stat
+//  2. swap black and red goal and elements
+//  3. reset color back to grey when all three are selected
+//  element set works without toggle
+//  + or - on the side of the buttons
+//  live updates
+
 export default function App() {
   const [events, setEvents] = useState([]);
   const [points, setPoints] = useState(0);
