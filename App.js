@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, Switch} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, Switch, TextInput} from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import firestore from '@react-native-firebase/firestore';
 
 // stuff to do:
 //  1. danger zone crossing button removes item from array not the stat
@@ -10,6 +12,8 @@ import {TouchableOpacity, StyleSheet, Text, View, Switch} from 'react-native';
 //  live updates
 
 export default function App() {
+  const matchCollection = firestore().collection('matches');
+
   const [events, setEvents] = useState([]);
   const [points, setPoints] = useState(0);
   const [elementSet, setElementSet] = useState(false);
@@ -29,17 +33,53 @@ export default function App() {
   const [decontaminationButton, setDecontaminationtButton] = useState(false);
   const [labDoorButton, setLabDoorButton] = useState(false);
   const [chemicalSpillButton, setChemicalSpillButton] = useState(false);
+  const [robot, setRobot] = useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [dropdownItems, setDropdownItems] = useState([
+    {label: 'Robot 1', value: '1'},
+    {label: 'Robot 2', value: '2'}
+  ]);
+  const [match, setMatch] = useState('');
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
-  //     console.log(dangerZoneCrossing);
-  //     // updateButtonColor();
-  //     // alert("updated button color")
-  //   }, 5000)
-  
-  //   return () => clearInterval(intervalId); //This is important
-   
-  // }, [])
+
+  useEffect(() => {
+    if (value) {
+      setCurrentMatchData();
+    }
+  })
+
+  function setCurrentMatchData() {
+    firestore()
+      .collection('matches')
+      .doc(`currentMatch`)
+      .collection('robots')
+      .doc(value)
+      .set({ points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
+      .then(() => {
+        console.log("Updated Current Match Data!");
+      })
+  }
+
+  function submitMatch() {
+    firestore()
+      .collection('matches')
+      .doc(match)
+      .collection('robots')
+      .doc(value)
+      .set({ points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
+      .then(() => {
+        console.log(`Set Match Data for ${match}`);
+      })
+
+      clear()
+      setMatch('');
+  }
+
+  // function updateData(robot) {
+  //   firestore()
+  //     .collection
+  // }
 
   function updateEvents(event) {
     var localEvents = events;
@@ -232,18 +272,6 @@ export default function App() {
     updateButtonColor();
   }
 
-  // function removeDangerZoneCrossing() {
-  //   // var localItems = items;
-  //   // if (localItems.dangerZoneCrossing > 0) {
-  //   //   localItems.dangerZoneCrossing--;
-  //   // }
-  //   setDangerZoneCrossing(dangerZoneCrossing.pop()); 
-  //   // updatePoints();
-  //   // updateItems();
-  //   updateButtonColor(dangerZoneCrossing.pop());
-    
-  // }
-
   function hasDuplicates(array) {
     return (new Set(array)).size !== array.length;
   }
@@ -362,6 +390,29 @@ export default function App() {
             <Text>Element Set: {items.elementSet ? "complete":"incomplete"}</Text>
             <Text>Danger Zone Crossing: {items.dangerZoneCrossing}</Text>
             <Text>Total Penalties: {items.totalPenalties}</Text>
+            <DropDownPicker
+              style={styles.picker}
+              open={open}
+              value={value}
+              items={dropdownItems}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setDropdownItems}
+            />
+            <View style={[styles.buttonGroup, {marginTop: 10}]}>
+              <TextInput 
+                style={styles.input}
+                onChangeText={setMatch}
+                value={match}
+                placeholder="match# (eg: QM3)"
+              />
+              <TouchableOpacity 
+                style={[styles.obstacleButton, {height: 42, marginTop: 10}]}
+                onPress={() => submitMatch()}
+              >
+                <Text>Submit</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>     
@@ -409,13 +460,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   obstacleButton: {
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
     marginBottom: 10,
     marginRight: 20,
     borderRadius: 10,
-    flex: 0.3
+    flex: 0.3,
   },
   buttonGroup: {
     flexDirection: 'row',
@@ -455,5 +507,19 @@ const styles = StyleSheet.create({
   obstacleButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between'
-  }
+  },
+  bottomCenter: {
+    position: "absolute", 
+    bottom: 0, 
+    right: 0
+  },
+  picker: {
+    marginTop: 10,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    flex: 0.7
+  },
 });
