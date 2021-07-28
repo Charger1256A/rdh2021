@@ -55,7 +55,7 @@ export default function App() {
       .doc(`currentMatch`)
       .collection('robots')
       .doc(value)
-      .set({ points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
+      .set({ name: robot, points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
       .then(() => {
         console.log("Updated Current Match Data!");
       })
@@ -67,13 +67,12 @@ export default function App() {
       .doc(match)
       .collection('robots')
       .doc(value)
-      .set({ points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
+      .set({ name: robot, points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
       .then(() => {
         console.log(`Set Match Data for ${match}`);
       })
 
       clear()
-      setMatch('');
   }
 
   // function updateData(robot) {
@@ -202,6 +201,8 @@ export default function App() {
     })
     setDangerZoneCrossing([])
     updateButtonColor();
+    setMatch('');
+    setRobot('');
   }
 
   function toggleElementSet() {
@@ -400,6 +401,12 @@ export default function App() {
               setItems={setDropdownItems}
             />
             <View style={[styles.buttonGroup, {marginTop: 10}]}>
+              <TextInput 
+                style={styles.input}
+                onChangeText={setRobot}
+                value={robot}
+                placeholder="robot# (eg: 1)"
+              />
               <TextInput 
                 style={styles.input}
                 onChangeText={setMatch}
