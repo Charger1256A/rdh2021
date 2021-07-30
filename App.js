@@ -93,17 +93,17 @@ export default function App() {
     } else if (event === 'YG') {
       localEvents.push(10);
     } else if (event === 'RG') {
-      localEvents.push(21);
+      localEvents.push(20);
     } else if (event === 'BG') {
-      localEvents.push(16);
+      localEvents.push(15);
     } else if (event === 'V') {
       localEvents.push(5);
     } else if (event === 'YE') {
-      localEvents.push(15);
+      localEvents.push(30);
     } else if (event === 'RE') {
-      localEvents.push(25);
+      localEvents.push(50);
     } else if (event === 'BE') {
-      localEvents.push(20);
+      localEvents.push(45);
     }
 
     setEvents(localEvents);
@@ -153,17 +153,17 @@ export default function App() {
         localItems.totalPenalties -= 50;
       } else if (events[i] === 10) {
         localItems.yellowGoal++;
-      } else if (events[i] === 21) {
+      } else if (events[i] === 20) {
         localItems.redGoal++;
-      } else if (events[i] === 16) {
+      } else if (events[i] === 15) {
         localItems.blackGoal++;
       } else if (events[i] === 5) {
         localItems.vials++;
-      } else if (events[i] === 15) {
+      } else if (events[i] === 30) {
         localItems.yellowElement++;
-      } else if (events[i] === 25) {
+      } else if (events[i] === 50) {
         localItems.redElement++;
-      } else if (events[i] === 20) {
+      } else if (events[i] === 45) {
         localItems.blackElement++;
       }
     }
