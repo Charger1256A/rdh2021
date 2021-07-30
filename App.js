@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, Switch, TextInput} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, Switch, TextInput, KeyboardAvoidingView} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import firestore from '@react-native-firebase/firestore';
 
@@ -122,7 +122,7 @@ export default function App() {
     for (var i = 0; i < events.length; i++) {
       localPoints += events[i];
     }
-    localPoints += items.dangerZoneCrossing * 10;
+    localPoints += items.dangerZoneCrossing * 5;
 
     if (localPoints < 0) {
       localPoints = 0;
@@ -277,7 +277,7 @@ export default function App() {
     return (new Set(array)).size !== array.length;
   }
   return (
-    <View style={styles.sectionContainer}>
+    <KeyboardAvoidingView behavior="position" style={styles.sectionContainer} enabled>
       <View style={styles.buttonGroup}>
         <View style={styles.column}>
           <View style={styles.sections}>
@@ -423,7 +423,7 @@ export default function App() {
           </View>
         </View>
       </View>     
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -433,6 +433,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     flexDirection: 'column',
     width: '100%',
+    flex: 1,
   },
   sectionTitle: {
     fontSize: 24,
