@@ -91,19 +91,19 @@ export default function App() {
     } else if (event === 'RC') {
       localEvents.push('DISQUALIFICATION');
     } else if (event === 'YG') {
-      localEvents.push(2);
+      localEvents.push(10);
     } else if (event === 'RG') {
-      localEvents.push(6);
+      localEvents.push(21);
     } else if (event === 'BG') {
-      localEvents.push(4);
+      localEvents.push(16);
     } else if (event === 'V') {
       localEvents.push(5);
     } else if (event === 'YE') {
-      localEvents.push(10);
-    } else if (event === 'RE') {
-      localEvents.push(20);
-    } else if (event === 'BE') {
       localEvents.push(15);
+    } else if (event === 'RE') {
+      localEvents.push(25);
+    } else if (event === 'BE') {
+      localEvents.push(20);
     }
 
     setEvents(localEvents);
@@ -151,19 +151,19 @@ export default function App() {
         localItems.totalPenalties -= 10;
       } else if (events[i] === -50) {
         localItems.totalPenalties -= 50;
-      } else if (events[i] === 2) {
+      } else if (events[i] === 10) {
         localItems.yellowGoal++;
-      } else if (events[i] === 6) {
+      } else if (events[i] === 21) {
         localItems.redGoal++;
-      } else if (events[i] === 4) {
+      } else if (events[i] === 16) {
         localItems.blackGoal++;
       } else if (events[i] === 5) {
         localItems.vials++;
-      } else if (events[i] === 10) {
-        localItems.yellowElement++;
-      } else if (events[i] === 20) {
-        localItems.redElement++;
       } else if (events[i] === 15) {
+        localItems.yellowElement++;
+      } else if (events[i] === 25) {
+        localItems.redElement++;
+      } else if (events[i] === 20) {
         localItems.blackElement++;
       }
     }
