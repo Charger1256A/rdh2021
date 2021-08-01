@@ -82,29 +82,7 @@ export default function App() {
 
   function updateEvents(event) {
     var localEvents = events;
-    if (event === 'F') {
-      localEvents.push(-5);
-    } else if (event === 'TF') {
-      localEvents.push(-10);
-    } else if (event === 'YC') {
-      localEvents.push(-25);
-    } else if (event === 'RC') {
-      localEvents.push(-50);
-    } else if (event === 'YG') {
-      localEvents.push(10);
-    } else if (event === 'RG') {
-      localEvents.push(20);
-    } else if (event === 'BG') {
-      localEvents.push(15);
-    } else if (event === 'V') {
-      localEvents.push(5);
-    } else if (event === 'YE') {
-      localEvents.push(30);
-    } else if (event === 'RE') {
-      localEvents.push(50);
-    } else if (event === 'BE') {
-      localEvents.push(45);
-    }
+    localEvents.push(event);
 
     setEvents(localEvents);
     // console.log(events);
@@ -115,7 +93,30 @@ export default function App() {
   function updatePoints() {
     var localPoints = 0;
     for (var i = 0; i < events.length; i++) {
-      localPoints += events[i];
+      if (events[i] === "F") {
+        localPoints -= 5;
+      } else if (events[i] === "TF") {
+        localPoints -= 10;
+      } else if (events[i] === "YC") {
+        localPoints -= 25;
+      } else if (events[i] === "RC") {
+        localPoints -= 50;
+      } else if (events[i] === "YG") {
+        localPoints += 10
+      } else if (events[i] === "RG") {
+        localPoints += 20
+      } else if (events[i] === "BG") {
+        localPoints += 15
+      } else if (events[i] === "V") {
+        localPoints += 5
+      } else if (events[i] === "YE") {
+        localPoints += 30
+      } else if (events[i] === "RE") {
+        localPoints += 50
+      } else if (events[i] === "BE") {
+        localPoints += 45
+      }
+      // localPoints += events[i];
     }
     localPoints += items.dangerZoneCrossing * 5;
 
@@ -140,27 +141,27 @@ export default function App() {
     };
     for (var i = 0; i < events.length; i++) {
       // console.log(events[i]);
-      if (events[i] === -5) {
+      if (events[i] === "F") {
         localItems.totalPenalties -= 5;
-      } else if (events[i] === -10) {
+      } else if (events[i] === "TF") {
         localItems.totalPenalties -= 10;
-      } else if (events[i] === -25) {
+      } else if (events[i] === "YC") {
         localItems.totalPenalties -= 25;
-      } else if (events[i] === -50) {
+      } else if (events[i] === "RC") {
         localItems.totalPenalties -= 50;
-      } else if (events[i] === 10) {
+      } else if (events[i] === "YG") {
         localItems.yellowGoal++;
-      } else if (events[i] === 20) {
+      } else if (events[i] === "RG") {
         localItems.redGoal++;
-      } else if (events[i] === 15) {
+      } else if (events[i] === "BG") {
         localItems.blackGoal++;
-      } else if (events[i] === 5) {
+      } else if (events[i] === "V") {
         localItems.vials++;
-      } else if (events[i] === 30) {
+      } else if (events[i] === "YE") {
         localItems.yellowElement++;
-      } else if (events[i] === 50) {
+      } else if (events[i] === "RE") {
         localItems.redElement++;
-      } else if (events[i] === 45) {
+      } else if (events[i] === "BE") {
         localItems.blackElement++;
       }
     }
