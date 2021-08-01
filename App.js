@@ -87,9 +87,9 @@ export default function App() {
     } else if (event === 'TF') {
       localEvents.push(-10);
     } else if (event === 'YC') {
-      localEvents.push(-50);
+      localEvents.push(-25);
     } else if (event === 'RC') {
-      localEvents.push('DISQUALIFICATION');
+      localEvents.push(-50);
     } else if (event === 'YG') {
       localEvents.push(10);
     } else if (event === 'RG') {
@@ -113,11 +113,6 @@ export default function App() {
   }
 
   function updatePoints() {
-    if (events.includes('DISQUALIFICATION')) {
-      setPoints('DISQUALIFICATION');
-      return;
-    }
-
     var localPoints = 0;
     for (var i = 0; i < events.length; i++) {
       localPoints += events[i];
@@ -149,6 +144,8 @@ export default function App() {
         localItems.totalPenalties -= 5;
       } else if (events[i] === -10) {
         localItems.totalPenalties -= 10;
+      } else if (events[i] === -25) {
+        localItems.totalPenalties -= 25;
       } else if (events[i] === -50) {
         localItems.totalPenalties -= 50;
       } else if (events[i] === 10) {
