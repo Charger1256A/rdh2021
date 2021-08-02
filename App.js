@@ -71,14 +71,34 @@ export default function App() {
       .then(() => {
         console.log(`Set Match Data for ${match}`);
       })
+      
+      firestore()
+        .collection('robots')
+        .doc(`robot${robot}`)
+        .collection('matches')
+        .add({
+          match: match,
+          value: {
+            yellowGoal: items.yellowGoal,
+            blackGoal: items.blackGoal,
+            redGoal: items.redGoal,
+            vials: items.vials,
+            dangerZoneCrossing: items.dangerZoneCrossing,
+          }
+        })
+      
+        // firestore()
+        // .collection('matches')
+        // .doc(match)
+        // .collection('robots')
+        // .doc(value)
+        // .set({ name: robot, points: points, items: items, dangerZoneCrossing: dangerZoneCrossing })
+        // .then(() => {
+        //   console.log(`Set Match Data for ${match}`);
+        // })
 
       clear()
   }
-
-  // function updateData(robot) {
-  //   firestore()
-  //     .collection
-  // }
 
   function updateEvents(event) {
     var localEvents = events;
@@ -214,7 +234,7 @@ export default function App() {
   function updatePointsElementSet() {
     updatePoints();
     if (!elementSet) {
-      setPoints(Math.round(points * 1.2));
+      setPoints(Math.round(points * 1.5));
       return;
     }
   }
@@ -222,8 +242,8 @@ export default function App() {
   const updateDangerZoneCrossing = (barrier) => {
     var localDangerZoneCrossing = dangerZoneCrossing;
     var localItems = items
-    console.log(localDangerZoneCrossing);
-    console.log(`187: ${typeof(localDangerZoneCrossing)}`);
+    // console.log(localDangerZoneCrossing);
+    // console.log(`187: ${typeof(localDangerZoneCrossing)}`);
     if(localDangerZoneCrossing.includes(barrier)) {
       localDangerZoneCrossing.shift(); //Removes first item
       // alert(localDangerZoneCrossing);
